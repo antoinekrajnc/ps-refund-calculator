@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="iso-8859-7">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PS Calculators</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+  </head>
+  <body>
+
+  <h1 class="d-flex justify-content-center m-4">Product School Refund Calculator</h1>
+
+    <form class="d-flex flex-column align-items-center p-2">
+      <p>Did the person take the bundle?</p>
+      <select id = "bundle" class="col-3">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+      </select><br>
+
+      <p>How many courses the person is dropping out from?</p>
+      <select id="number_of_courses_dropped_out" class="col-3">
+        <option value="0">0</option>
+        <option value=1>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+      </select><br>
+      <p>How many WEEKNIGHT classes did the person take?</p>
+      <input class="col-3" id="number_of_weeknight_classes_taken" type="number"><br>
+      <p>How many WEEKEND classes did the person take?</p>
+      <input class="col-3" id="number_of_weekend_classes_taken" type="number"><br>
+      <p>How much did the person already paid?</p>
+      <input class="col-3" id="what_the_person_already_paid" type="number"><br>
+      <input class="btn btn-primary col-3" id="calculate_refund" type="button" value="Calculate Refund">
+      <p class="col-3 m-3 btn btn-secondary" id="refund_amount">Refund Amount: </p>
+
+    </form>
+
+    <script>
+
+    var total_classes =0;
+    var number_of_weeknight_classes_taken = 0;
+    var number_of_weekend_classes_taken = 0;
+    var non_refundable_fee = 0;
+    var total_price = 0;
+    var what_the_person_already_paid = 0;
+    var what_the_person_owe_ps = 0;
+    var refund_amount = 0;
+
+    $("#number_of_weeknight_classes_taken").change(function(){
+      number_of_weeknight_classes_taken = $("#number_of_weeknight_classes_taken").val() *1;
+    });
+
+    $("#number_of_weekend_classes_taken").change(function(){
+      number_of_weekend_classes_taken = $("#number_of_weekend_classes_taken").val() * 2;
+    });
+
+    $("#number_of_courses_dropped_out").change(function(){
+
+      if ($("#bundle").val()=="yes" && $("#number_of_courses_dropped_out").val()==1) {
+        total_price = 8995 - 7990;
+        non_refundable_fee = 250;
+        total_classes =16;
+      }
+      else if ($("#bundle").val()=="yes" && $("#number_of_courses_dropped_out").val()==2) {
+        total_price = 8995 - 3995;
+        non_refundable_fee = 500;
+        total_classes = 16 *2;
+      }
+      else if ($("#number_of_courses_dropped_out").val()==1) {
+        non_refundable_fee = 250;
+        total_price = 3995
+        total_classes =16;
+      } else if ($("#number_of_courses_dropped_out").val()==2) {
+        non_refundable_fee = 500;
+        total_price = 7990;
+        total_classes = 16 *2;
+      } else if ($("#number_of_courses_dropped_out").val()==3) {
+        non_refundable_fee = 750;
+        total_price = 8995;
+        total_classes = 16 *3;
+      };
+    });
+
+
+    $("#what_the_person_already_paid").change(function(){
+      what_the_person_already_paid = $("#what_the_person_already_paid").val();
+    });
+
+    $("#calculate_refund").click(function(){
+
+      if ($("#bundle").val()=="yes") {
+        refund_amount = (total_price - non_refundable_fee) / total_classes * (total_classes - number_of_weekend_classes_taken - number_of_weeknight_classes_taken);
+      } else {
+      what_the_person_owe_ps = (total_price - non_refundable_fee) / total_classes * (number_of_weekend_classes_taken + number_of_weeknight_classes_taken) + non_refundable_fee;
+      refund_amount = what_the_person_already_paid - what_the_person_owe_ps;
+    };
+      $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: ' + refund_amount + '</p>');
+    });
+
+
+    </script>
+
+
+
+  </body>
+</html>
