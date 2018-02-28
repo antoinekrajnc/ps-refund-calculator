@@ -103,10 +103,12 @@
       } else {
       refund_amount = what_the_person_already_paid - what_the_person_owe_ps;
     };
-
-      $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: ' + refund_amount + '</p>');
+      if (refund_amount < 0) {
+        $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: ' + refund_amount + '</p><br><p class="col-3 alert alert-danger">If refund is negative, it means that person still owes Product School the amount you see above.</p>');
+      } else {
+        $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: ' + refund_amount + '</p>');
+      };
     });
-
 
     </script>
 
