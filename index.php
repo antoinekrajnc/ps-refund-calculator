@@ -1,1 +1,1 @@
-<?php header( 'Location: /ps-calculator.html' ) ;  ?>
+<?php header( 'Location: /ps-refund-calculator.html' ) ;  ?>
