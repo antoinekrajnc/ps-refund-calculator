@@ -37,7 +37,7 @@
         <option value="sm">Denver</option>
         <option value="sm">Boulder</option>
         <option value="sm">Toronto</option>
-        <option value="bm">London</option>
+        <option value="gb">London</option>
       </select><br>
 
       <p>How many courses the person is dropping out from?</p>
@@ -131,8 +131,10 @@
     };
       if (refund_amount < 0) {
         $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: ' + refund_amount + '</p><br><p class="col-3 alert alert-danger">If refund is negative, it means that person still owes Product School the amount you see above.</p>');
+      } else if ($("#location").val()=="gb") {
+        $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: £ ' + refund_amount + '</p>');
       } else {
-        $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: ' + refund_amount + '</p>');
+        $("#refund_amount").replaceWith('<p class="col-3 m-3 btn btn-success">Refund Amount: $ ' + refund_amount + '</p>');
       };
     });
 
